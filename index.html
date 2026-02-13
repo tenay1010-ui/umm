@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You 🤍</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(-45deg, #fff1f2, #f5f3ff, #fdf2f8, #ede9fe);
+    background-size: 400% 400%;
+    animation: gradientMove 15s ease infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes gradientMove {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+}
+
+/* Floating hearts */
+.heart {
+    position: absolute;
+    color: #f472b6;
+    animation: floatUp linear infinite;
+    opacity: 0.6;
+}
+
+@keyframes floatUp {
+    from {
+        transform: translateY(100vh) scale(1);
+        opacity: 0;
+    }
+    50% {opacity: 0.8;}
+    to {
+        transform: translateY(-10vh) scale(1.4);
+        opacity: 0;
+    }
+}
+
+/* Main container */
+.page {
+    width: 90%;
+    max-width: 800px;
+    text-align: center;
+    padding: 60px;
+    border-radius: 30px;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 25px 60px rgba(0,0,0,0.08);
+    animation: fadeIn 0.8s ease;
+    position: relative;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0; transform: scale(0.95);}
+    to {opacity: 1; transform: scale(1);}
+}
+
+h1 {
+    font-family: 'Playfair Display', serif;
+    color: #7c3aed;
+    font-size: 2.5rem;
+}
+
+p {
+    color: #555;
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+button {
+    padding: 14px 32px;
+    margin: 20px;
+    border: none;
+    border-radius: 30px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.yes {
+    background: #c084fc;
+    color: white;
+}
+
+.yes:hover {
+    background: #a855f7;
+    box-shadow: 0 0 20px rgba(168,85,247,0.5);
+}
+
+.no {
+    background: #fda4af;
+    color: white;
+    position: absolute;
+}
+
+.hidden {
+    display: none;
+}
+
+#retryMsg {
+    margin-top: 20px;
+    color: #be185d;
+    font-weight: 500;
+}
+</style>
+</head>
+<body>
+
+<div class="page" id="page1">
+    <h1>Is this Apeksha?</h1>
+    <button class="yes" onclick="goToLove()">Yes</button>
+    <button class="no" onclick="showRetry()">No</button>
+    <p id="retryMsg"></p>
+</div>
+
+<div class="page hidden" id="page2">
+    <h1>Do you love me?</h1>
+    <button class="yes" onclick="showFinal()">Yes</button>
+    <button class="no" id="runawayBtn">No</button>
+</div>
+
+<div class="page hidden" id="finalPage">
+    <h1>For You 🤍</h1>
+    <p>
+        You make my world softer in ways I never expected. <br><br>
+        Being with you feels peaceful, exciting, and safe all at once. <br><br>
+        I don’t just love you — I appreciate you, I admire you,  
+        and I’m grateful for you every single day. <br><br>
+        I’m really lucky to have you.
+    </p>
+</div>
+
+<script>
+
+/* Floating hearts */
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "❤";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (15 + Math.random() * 25) + "px";
+    heart.style.animationDuration = (5 + Math.random() * 5) + "s";
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 9000);
+}
+setInterval(createHeart, 600);
+
+/* Retry message */
+function showRetry() {
+    document.getElementById("retryMsg").innerText = "Yes you are! 🤍";
+}
+
+/* Page switch */
+function goToLove() {
+    document.getElementById("page1").classList.add("hidden");
+    document.getElementById("page2").classList.remove("hidden");
+
+    const noBtn = document.getElementById("runawayBtn");
+    const page = document.getElementById("page2");
+
+    noBtn.addEventListener("mouseover", function() {
+        const maxX = page.clientWidth - noBtn.offsetWidth - 40;
+        const maxY = page.clientHeight - noBtn.offsetHeight - 40;
+
+        noBtn.style.left = Math.random() * maxX + "px";
+        noBtn.style.top = Math.random() * maxY + "px";
+    });
+}
+
+function showFinal() {
+    document.getElementById("page2").classList.add("hidden");
+    document.getElementById("finalPage").classList.remove("hidden");
+}
+
+</script>
+
+</body>
+</html>
